@@ -16,13 +16,13 @@ class PersonForm(FlaskForm):
 
 
     #   Verifier Information
-    v_fname = StringField('First Name', validators=[DataRequired()])
-    v_lname = StringField('Last Name', validators=[DataRequired()])
-    v_phone = StringField('Phone Number', validators=[DataRequired()])
-    v_address = StringField('Address', validators=[DataRequired()])
-    v_city = StringField('City', validators=[DataRequired()])
-    v_state = StringField('State', validators=[DataRequired()])
-    v_zipcode = IntegerField('Zipcode', validators=[DataRequired()])
+    v_fname = StringField('Verifier First Name', validators=[DataRequired()])
+    v_lname = StringField('Verifier Last Name', validators=[DataRequired()])
+    v_phone = StringField('Verifier Phone Number', validators=[DataRequired()])
+    v_address = StringField('Verifier Address', validators=[DataRequired()])
+    v_city = StringField('Verifier City', validators=[DataRequired()])
+    v_state = StringField('Verifier State', validators=[DataRequired()])
+    v_zipcode = IntegerField('Verifier Zipcode', validators=[DataRequired()])
     submit = SubmitField('submit')
 
 
