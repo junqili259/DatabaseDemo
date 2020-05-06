@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+			<ul class="list">
+                <h2>Personal Information</h2>
+				{{ form.fname.label() }} <br> {{ form.fname }} <br>
+				{{ form.lname.label() }} <br> {{ form.lname }} <br>
+				{{ form.id_num.label() }} <br> {{ form.id_num }} <br>
+                {{ form.sex.label( )}} <br> {{form.sex }} <br>
+                {{ form.dob.label() }} <br> {{ form.dob }} <br>
+                {{ form.phone.label() }} <br> {{ form.phone }}<br>
+                {{ form.ethnicity.label() }} <br> {{ form.ethnicity }} <br>
+                {{ form.marital_status.label() }} <br> {{ form.marital_status }} <br>
+
+                <br>
+                {{ form.submit }}
+			</ul>
+    </form>	
+</body>
+</html>

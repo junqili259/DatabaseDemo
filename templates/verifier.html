@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+			<ul class="list">
+                <h2>Verifier Information</h2>
+                {{ form.fname.label()  }} <br> {{  form.fname  }} <br>  
+                {{ form.lname.label()  }} <br> {{  form.lname  }}  <br>
+                {{ form.phone.label()  }}  <br> {{ form.phone  }}  <br>
+                {{ form.address.label() }} <br> {{ form.address }} <br>
+                {{ form.city.label() }} <br> {{ form.city}} <br>
+                {{ form.zipcode.label() }} <br> {{ form.zipcode }} <br>
+                <br>
+                {{ form.submit}}
+                
+			</ul>
+    </form>	
+</body>
+</html>
