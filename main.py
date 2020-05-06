@@ -60,17 +60,25 @@ def home():
         v_state = request.form.get('v_state')
         v_zipcode = request.form.get('v_zipcode')
 
+
+        #   Shelter History Info
+        shelter = request.form.get('shelter')
+        date_in = request.form.get('date_in')
+        date_out = request.form.get('date_out')
+
         #   Create the SQL statement
         stmt = sqlalchemy.text("INSERT INTO Person(Fname,Lname,id,sex,dob,phone,ethnicity,admission_id,marital_status,med_id,verifier_id,history_id)" "VALUES(:Fname,:Lname,:id,:sex,:dob,:phone,:ethnicity,:admission_id,:marital_status,:med_id,:verifier_id,:history_id)")
         stmt2 = sqlalchemy.text("INSERT INTO Verifier(verifier_id,Fname,Lname,phone,Vaddress_id)" "VALUES(:verifier_id,:Fname,:Lname,:phone,:Vaddress_id)")
         stmt3 = sqlalchemy.text("INSERT INTO VerifierAddress(Vaddress_id, address, state, city, zipcode)" "VALUES(:Vaddress_id, :address, :state, :city, :zipcode)")
-
+        stmt4 = sqlalchemy.text("INSERT INTO ShelterHistory(history_id,shelterID,date_in,date_out)" "VALUES(:history_id,:shelterID,:date_in,:date_out)")
 
         try:
             with db.connect() as conn:
                 conn.execute(stmt,Fname=fname,Lname=lname,id=id_num,sex=sex,dob=dob,phone=phone,ethnicity=ethnicity,admission_id=id_num,marital_status=marital_status,med_id=id_num,verifier_id=id_num,history_id=id_num)
                 conn.execute(stmt2,verifier_id=id_num, Fname=v_fname, Lname=v_lname, phone=v_phone, Vaddress_id=id_num)
                 conn.execute(stmt3, Vaddress_id=id_num, address=v_address, state=v_state, city=v_city, zipcode=v_zipcode)
+                if shelter == 0:
+                    conn.execute(stmt4, history_id=id_num, shelterID=shelter, date_in=date_in, date_out=date_out)
         
         except Exception as e:
             logger.exception(e)
