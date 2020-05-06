@@ -17,7 +17,7 @@ class PersonForm(FlaskForm):
 
     #   Verifier Information
     v_fname = StringField('First Name', validators=[DataRequired()])
-    V_lname = StringField('Last Name', validators=[DataRequired()])
+    v_lname = StringField('Last Name', validators=[DataRequired()])
     v_phone = StringField('Phone Number', validators=[DataRequired()])
     v_address = StringField('Address', validators=[DataRequired()])
     v_city = StringField('City', validators=[DataRequired()])
@@ -28,7 +28,7 @@ class PersonForm(FlaskForm):
 
 class VerifierForm(FlaskForm):
     v_fname = StringField('First Name', validators=[DataRequired()])
-    V_lname = StringField('Last Name', validators=[DataRequired()])
+    v_lname = StringField('Last Name', validators=[DataRequired()])
     v_phone = StringField('Phone Number', validators=[DataRequired()])
     v_address = StringField('Address', validators=[DataRequired()])
     v_city = StringField('City', validators=[DataRequired()])
