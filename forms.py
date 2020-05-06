@@ -3,6 +3,7 @@ from wtforms import StringField, TextField, SubmitField, IntegerField, RadioFiel
 from wtforms.validators import DataRequired, Length, EqualTo, Email
 
 class PersonForm(FlaskForm):
+    #   Personal Information
     fname = StringField('First Name', validators=[DataRequired()])
     lname = StringField('Last Name', validators=[DataRequired()])
     id_num = IntegerField('ID number', validators=[DataRequired()])
@@ -12,16 +13,26 @@ class PersonForm(FlaskForm):
     phone = StringField('Phone Number')
     ethnicity = RadioField('Ethnicity',choices=[('American Indian/Alaskan Native','American Indian/Alaskan Native'),('Asian/Pacific Islander','Asian/Pacific Islander'),('Black/African American','Black/African American'),('Hispanic','Hispanic'),('White','White')], validators=[DataRequired()])
     marital_status = RadioField('Marital Status',choices = [('Single','Single'),('Married','Married'),('Widowed','Widowed'),('Divorced','Divorced')], validators=[DataRequired()])
+
+
+    #   Verifier Information
+    v_fname = StringField('First Name', validators=[DataRequired()])
+    V_lname = StringField('Last Name', validators=[DataRequired()])
+    v_phone = StringField('Phone Number', validators=[DataRequired()])
+    v_address = StringField('Address', validators=[DataRequired()])
+    v_city = StringField('City', validators=[DataRequired()])
+    v_state = StringField('State', validators=[DataRequired()])
+    v_zipcode = IntegerField('Zipcode', validators=[DataRequired()])
     submit = SubmitField('submit')
 
 
 class VerifierForm(FlaskForm):
-    fname = StringField('First Name', validators=[DataRequired()])
-    lname = StringField('Last Name', validators=[DataRequired()])
-    phone = StringField('Phone Number', validators=[DataRequired()])
-    address = StringField('Address', validators=[DataRequired()])
-    city = StringField('City', validators=[DataRequired()])
-    zipcode = IntegerField('Zipcode', validators=[DataRequired()])
+    v_fname = StringField('First Name', validators=[DataRequired()])
+    V_lname = StringField('Last Name', validators=[DataRequired()])
+    v_phone = StringField('Phone Number', validators=[DataRequired()])
+    v_address = StringField('Address', validators=[DataRequired()])
+    v_city = StringField('City', validators=[DataRequired()])
+    v_zipcode = IntegerField('Zipcode', validators=[DataRequired()])
     submit = SubmitField('submit')
 
 
