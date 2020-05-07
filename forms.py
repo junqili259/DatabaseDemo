@@ -11,8 +11,8 @@ states = [('AL','AL'),('AK','AK'),('AZ','AZ'),('AR','AR'),('CA','CA'),('CO','CO'
 ('WA','WA'),('WV','WV'),('WI','WI'),('WY','WY'),('PR','PR')]
 
 
-shelter_choices = [(0,'None'),(1,'Shelter One'),(2,'Shelter Two'),(3,'Shelter Three'),(4,'Shelter Four'),(5,'Shelter Five'),(6,'Shelter Six'),(7,'Shelter Seven'),(8,'Shelter Eight'),(9,'Shelter Nine'),(10,'Shelter Ten'),
-(11,'Shelter Eleven'),(12,'Shelter Twelve'),(13,'Shelter Thirteen'),(14,'Shelter Fourteen'),(15,'Shelter Fifteen'),(16,'Shelter Sixteen'),(17,'Shelter Seventeen'),(18,'Shelter Eighteen'),(19,'Shelter Nineteen'),(20,'Shelter Twenty')]
+shelter_choices = [('0','None'),('1','Shelter One'),('2','Shelter Two'),('3','Shelter Three'),('4','Shelter Four'),('5','Shelter Five'),('6','Shelter Six'),('7','Shelter Seven'),('8','Shelter Eight'),('9','Shelter Nine'),('10','Shelter Ten'),
+('11','Shelter Eleven'),('12','Shelter Twelve'),('13','Shelter Thirteen'),('14','Shelter Fourteen'),('15','Shelter Fifteen'),('16','Shelter Sixteen'),('17','Shelter Seventeen'),('18','Shelter Eighteen'),('19','Shelter Nineteen'),('20','Shelter Twenty')]
 
 class PersonForm(FlaskForm):
     #   Personal Information
