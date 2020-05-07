@@ -25,6 +25,9 @@ class PersonForm(FlaskForm):
     ethnicity = RadioField('Ethnicity',choices=[('American Indian/Alaskan Native','American Indian/Alaskan Native'),('Asian/Pacific Islander','Asian/Pacific Islander'),('Black/African American','Black/African American'),('Hispanic','Hispanic'),('White','White')], validators=[DataRequired()])
     marital_status = RadioField('Marital Status',choices = [('Single','Single'),('Married','Married'),('Widowed','Widowed'),('Divorced','Divorced')], validators=[DataRequired()])
 
+    #   Medical Details
+    medical = StringField('Medical Details', validators=[Optional()])
+
 
     #   Verifier Information
     v_fname = StringField('Verifier First Name', validators=[DataRequired()])

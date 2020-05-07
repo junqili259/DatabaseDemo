@@ -49,6 +49,7 @@ def home():
         phone = request.form.get('phone')
         ethnicity = request.form.get('ethnicity')
         marital_status = request.form.get('marital_status')
+        medical = request.form.get('medical')
 
 
         #   Verifier info
@@ -67,16 +68,28 @@ def home():
         date_out = request.form.get('date_out')
 
         #   Create the SQL statement
+
+        #   Person info
         stmt = sqlalchemy.text("INSERT INTO Person(Fname,Lname,id,sex,dob,phone,ethnicity,admission_id,marital_status,med_id,verifier_id,history_id)" "VALUES(:Fname,:Lname,:id,:sex,:dob,:phone,:ethnicity,:admission_id,:marital_status,:med_id,:verifier_id,:history_id)")
+
+        #   Verifier Info
         stmt2 = sqlalchemy.text("INSERT INTO Verifier(verifier_id,Fname,Lname,phone,Vaddress_id)" "VALUES(:verifier_id,:Fname,:Lname,:phone,:Vaddress_id)")
+        
+        #   Verifier Address
         stmt3 = sqlalchemy.text("INSERT INTO VerifierAddress(Vaddress_id, address, state, city, zipcode)" "VALUES(:Vaddress_id, :address, :state, :city, :zipcode)")
+        
+        #   Shelter History for Person
         stmt4 = sqlalchemy.text("INSERT INTO ShelterHistory(history_id,shelterID,date_in,date_out)" "VALUES(:history_id,:shelterID,:date_in,:date_out)")
+
+        #   Person's medical details
+        stmt5 = sqlalchemy.text("INSERT INTO Medical(med_id,allergy)" "VALUES(:med_id,:allergy)")
 
         try:
             with db.connect() as conn:
                 conn.execute(stmt,Fname=fname,Lname=lname,id=id_num,sex=sex,dob=dob,phone=phone,ethnicity=ethnicity,admission_id=id_num,marital_status=marital_status,med_id=id_num,verifier_id=id_num,history_id=id_num)
                 conn.execute(stmt2,verifier_id=id_num, Fname=v_fname, Lname=v_lname, phone=v_phone, Vaddress_id=id_num)
                 conn.execute(stmt3, Vaddress_id=id_num, address=v_address, state=v_state, city=v_city, zipcode=v_zipcode)
+                conn.execute(stmt5, med_id=id_num,allergy=medical)
                 if shelter != '0':
                     conn.execute(stmt4, history_id=id_num, shelterID=shelter, date_in=date_in, date_out=date_out)
         
