@@ -77,7 +77,7 @@ def home():
                 conn.execute(stmt,Fname=fname,Lname=lname,id=id_num,sex=sex,dob=dob,phone=phone,ethnicity=ethnicity,admission_id=id_num,marital_status=marital_status,med_id=id_num,verifier_id=id_num,history_id=id_num)
                 conn.execute(stmt2,verifier_id=id_num, Fname=v_fname, Lname=v_lname, phone=v_phone, Vaddress_id=id_num)
                 conn.execute(stmt3, Vaddress_id=id_num, address=v_address, state=v_state, city=v_city, zipcode=v_zipcode)
-                if shelter != 0:
+                if shelter != '0':
                     conn.execute(stmt4, history_id=id_num, shelterID=shelter, date_in=date_in, date_out=date_out)
         
         except Exception as e:
