@@ -2,7 +2,7 @@ import os
 import logging
 
 from flask import Flask, render_template, url_for, redirect, request, Response
-from forms import PersonForm
+from forms import PersonForm, SearchForm
 import requests, random
 import sqlalchemy
 
@@ -89,7 +89,8 @@ def home():
                 conn.execute(stmt,Fname=fname,Lname=lname,id=id_num,sex=sex,dob=dob,phone=phone,ethnicity=ethnicity,admission_id=id_num,marital_status=marital_status,med_id=id_num,verifier_id=id_num,history_id=id_num)
                 conn.execute(stmt2,verifier_id=id_num, Fname=v_fname, Lname=v_lname, phone=v_phone, Vaddress_id=id_num)
                 conn.execute(stmt3, Vaddress_id=id_num, address=v_address, state=v_state, city=v_city, zipcode=v_zipcode)
-                conn.execute(stmt5, med_id=id_num,allergy=medical)
+                if medical != '':
+                    conn.execute(stmt5, med_id=id_num,allergy=medical)
                 if shelter != '0':
                     conn.execute(stmt4, history_id=id_num, shelterID=shelter, date_in=date_in, date_out=date_out)
         
@@ -97,12 +98,34 @@ def home():
             logger.exception(e)
 
 
-        return redirect(url_for('verifier'))
+        return redirect(url_for('success'))
     return render_template('home.html',form=form)
 
 
 
 
-@app.route('/verifier',methods=['GET','POST'])
-def verifier():
+@app.route('/success',methods=['GET'])
+def success():
     return Response(response="Successfully added to database", status=200)
+
+
+
+
+
+@app.route('/searchid',methods=['GET','POST'])
+def search():
+    form=SearchForm()
+    if form.validate_on_submit():
+        id_num = request.form.get('id_num')
+
+        stmt_person = sqlalchemy.text("SELECT * FROM PERSON where id=:id")
+
+        try:
+            with db.connect() as conn:
+                result = conn.execute(stmt_person, id=id_num).fetchone()
+
+        except Exception as e:
+            logger.exception(e)
+
+            return Response(reponse=result, status=200)
+    return render_template('searchid./html',form=form)

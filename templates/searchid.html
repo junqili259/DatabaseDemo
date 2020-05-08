@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Search by ID</title>
+</head>
+<body>
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+			<ul class="list">
+                {{ form.id_num.label() }} <br> {{ form.id_num }} <br>
+
+                <br>
+                {{ form.submit }}
+			</ul>
+    </form>	
+</body>
+</html>

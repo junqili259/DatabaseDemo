@@ -18,7 +18,7 @@ class PersonForm(FlaskForm):
     #   Personal Information
     fname = StringField('First Name', validators=[DataRequired()])
     lname = StringField('Last Name', validators=[DataRequired()])
-    id_num = IntegerField('ID number', validators=[DataRequired()])
+    id_num = IntegerField('ID number', validators=[DataRequired(), Length(min=9,max=9)])
     sex = RadioField('Sex', choices = [('M','Male'),('F','Female')], validators=[DataRequired()])
     dob = DateField('Date of Birth, format: yyyy-mm-dd, Example: 2000-01-01',format='%Y-%m-%d',validators=[DataRequired()])
     phone = StringField('Phone Number',validators=[Optional()])
@@ -47,7 +47,10 @@ class PersonForm(FlaskForm):
     
     submit = SubmitField('submit')
 
-
+#   Search data by ID
+class SearchForm(FlaskForm):
+    id_num = IntegerField('Enter ID', validators=[DataRequired(), Length(min=9,max=9)])
+    submit = SubmitField('submit')
 
 
 
