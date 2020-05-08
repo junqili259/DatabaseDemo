@@ -116,9 +116,11 @@ def success():
 def search():
     form=SearchForm()
     if form.validate_on_submit():
+
+        # Get User input
         id_num = request.form.get('id_num')
 
-        stmt_person = sqlalchemy.text("SELECT * FROM PERSON where id=:id")
+        stmt_person = sqlalchemy.text("SELECT Fname,Lname,sex,dob,ethnicity,marital_status FROM PERSON where id=:id")
 
         try:
             with db.connect() as conn:
@@ -127,5 +129,5 @@ def search():
         except Exception as e:
             logger.exception(e)
 
-            return Response(reponse=result, status=200)
-    return render_template('searchid./html',form=form)
+            return render_template('result.html', len=len(result), result=result)
+    return render_template('searchid.html',form=form)
