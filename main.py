@@ -2,7 +2,7 @@ import os
 import logging
 
 from flask import Flask, render_template, url_for, redirect, request, Response
-from forms import PersonForm, VerifierForm
+from forms import PersonForm
 import requests, random
 import sqlalchemy
 
@@ -105,5 +105,4 @@ def home():
 
 @app.route('/verifier',methods=['GET','POST'])
 def verifier():
-    form = VerifierForm()
-    return render_template('verifier.html',form=form)
+    return Response(response="Successfully added to database", status=200)

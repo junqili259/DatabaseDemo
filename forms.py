@@ -48,14 +48,6 @@ class PersonForm(FlaskForm):
     submit = SubmitField('submit')
 
 
-class VerifierForm(FlaskForm):
-    v_fname = StringField('First Name', validators=[DataRequired()])
-    v_lname = StringField('Last Name', validators=[DataRequired()])
-    v_phone = StringField('Phone Number', validators=[DataRequired()])
-    v_address = StringField('Address', validators=[DataRequired()])
-    v_city = StringField('City', validators=[DataRequired()])
-    v_zipcode = IntegerField('Zipcode', validators=[DataRequired()])
-    submit = SubmitField('submit')
 
 
 
