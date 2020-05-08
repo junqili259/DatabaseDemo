@@ -125,9 +125,15 @@ def search():
         try:
             with db.connect() as conn:
                 result = conn.execute(stmt_person, id=id_num).fetchone()
+                fname = result[0]
+                lname = result[1]
+                sex = result[2]
+                dob = result[3]
+                ethnicity = result[4]
+                marital = result[5]
 
         except Exception as e:
             logger.exception(e)
 
-            return render_template('result.html', len=len(result), result=result)
+            return render_template('result.html', fname=fname,lname=lname,sex=sex,dob=dob,ethnicity=ethnicity,marital=marital)
     return render_template('searchid.html',form=form)
