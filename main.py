@@ -55,6 +55,7 @@ def home():
         #   Verifier info
         v_fname = request.form.get('v_fname')
         v_lname = request.form.get('v_lname')
+        v_id = request.form.get('v_id')
         v_phone = request.form.get('v_phone')
         v_address = request.form.get('v_address')
         v_city = request.form.get('v_city')
@@ -86,9 +87,9 @@ def home():
 
         try:
             with db.connect() as conn:
-                conn.execute(stmt,Fname=fname,Lname=lname,id=id_num,sex=sex,dob=dob,phone=phone,ethnicity=ethnicity,admission_id=id_num,marital_status=marital_status,med_id=id_num,verifier_id=id_num,history_id=id_num)
-                conn.execute(stmt2,verifier_id=id_num, Fname=v_fname, Lname=v_lname, phone=v_phone, Vaddress_id=id_num)
-                conn.execute(stmt3, Vaddress_id=id_num, address=v_address, state=v_state, city=v_city, zipcode=v_zipcode)
+                conn.execute(stmt,Fname=fname,Lname=lname,id=id_num,sex=sex,dob=dob,phone=phone,ethnicity=ethnicity,admission_id=id_num,marital_status=marital_status,med_id=id_num,verifier_id=v_id,history_id=id_num)
+                conn.execute(stmt2,verifier_id=v_id, Fname=v_fname, Lname=v_lname, phone=v_phone, Vaddress_id=v_id)
+                conn.execute(stmt3, Vaddress_id=v_id, address=v_address, state=v_state, city=v_city, zipcode=v_zipcode)
                 if medical != '':
                     conn.execute(stmt5, med_id=id_num,allergy=medical)
                 if shelter != '0':

@@ -32,6 +32,7 @@ class PersonForm(FlaskForm):
     #   Verifier Information
     v_fname = StringField('Verifier First Name', validators=[DataRequired()])
     v_lname = StringField('Verifier Last Name', validators=[DataRequired()])
+    v_id = IntegerField('Verifier ID number', validators=[DataRequired()])
     v_phone = StringField('Verifier Phone Number', validators=[DataRequired()])
     v_address = StringField('Verifier Address', validators=[DataRequired()])
     v_city = StringField('Verifier City', validators=[DataRequired()])
