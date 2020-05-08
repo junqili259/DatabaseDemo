@@ -120,7 +120,7 @@ def search():
         # Get User input
         id_num = request.form.get('id_num')
 
-        stmt_person = sqlalchemy.text("SELECT Fname,Lname,sex,dob,ethnicity,marital_status FROM PERSON where id=:id")
+        stmt_person = sqlalchemy.text("SELECT Fname,Lname,sex,dob,ethnicity,marital_status FROM Person where id=:id")
 
         try:
             with db.connect() as conn:
@@ -135,5 +135,5 @@ def search():
         except Exception as e:
             logger.exception(e)
 
-            return render_template('result.html', fname=fname,lname=lname,sex=sex,dob=dob,ethnicity=ethnicity,marital=marital)
+        return render_template('result.html', fname=fname,lname=lname,sex=sex,dob=dob,ethnicity=ethnicity,marital=marital)
     return render_template('searchid.html',form=form)
