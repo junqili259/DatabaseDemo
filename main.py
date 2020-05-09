@@ -92,11 +92,14 @@ def home():
 
         stmt7 = sqlalchemy.text("INSERT INTO Subscription(subscription_id, start, end)" "VALUES(:subscription_id, :start, :end)")
 
+        stmt8 = sqlalchemy.text("INSERT INTO Admission(admission_id,trial_id,subscription_id)" "VALUES(:admission_id,:trial_id,:subscription_id)")
+
         try:
             with db.connect() as conn:
                 conn.execute(stmt,Fname=fname,Lname=lname,id=id_num,sex=sex,dob=dob,phone=phone,ethnicity=ethnicity,admission_id=id_num,marital_status=marital_status,med_id=id_num,verifier_id=v_id,history_id=id_num)
                 conn.execute(stmt2,verifier_id=v_id, Fname=v_fname, Lname=v_lname, phone=v_phone, Vaddress_id=v_id)
                 conn.execute(stmt3, Vaddress_id=v_id, address=v_address, state=v_state, city=v_city, zipcode=v_zipcode)
+                conn.execute(stmt8,admission_id=id_num,trial_id=id_num,subscription_id=id_num)
                 if medical != '':
                     conn.execute(stmt5, med_id=id_num,allergy=medical)
                 if shelter != '0':
