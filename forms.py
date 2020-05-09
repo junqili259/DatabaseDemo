@@ -45,6 +45,10 @@ class PersonForm(FlaskForm):
     shelter = SelectField('Shelter Name', choices=shelter_choices,validators=[DataRequired()])
     date_in = DateField('Date In, format: yyyy-mm-dd, Example: 2000-01-01',format='%Y-%m-%d',validators=[Optional()])
     date_out = DateField('Date Out, format: yyyy-mm-dd, Example: 2000-01-01', format='%Y-%m-%d',validators=[Optional()])
+
+
+    #   Free trial or Subscription
+    plan = RadioField('Choose', choices=[('F','Free Trial'),('S','Subscription')], validators=[DataRequired()])
     
     submit = SubmitField('submit')
 

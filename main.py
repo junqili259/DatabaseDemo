@@ -3,6 +3,7 @@ import logging
 
 from flask import Flask, render_template, url_for, redirect, request, Response
 from forms import PersonForm, SearchForm
+from datetime import date,timedelta
 import requests, random
 import sqlalchemy
 
@@ -68,6 +69,8 @@ def home():
         date_in = request.form.get('date_in')
         date_out = request.form.get('date_out')
 
+        plan = request.form.get('plan')
+
         #   Create the SQL statement
 
         #   Person info
@@ -85,6 +88,10 @@ def home():
         #   Person's medical details
         stmt5 = sqlalchemy.text("INSERT INTO Medical(med_id,allergy)" "VALUES(:med_id,:allergy)")
 
+        stmt6 = sqlalchemy.text("INSERT INTO FreeTrial(trial_id,trial_start,trial_end)" "VALUES(:trial_id,:trial_start,:trial_end)")
+
+        stmt7 = sqlalchemy.text("INSERT INTO Subscription(subscription_id, start, end)" "VALUES(:subscription_id, :start, :end)")
+
         try:
             with db.connect() as conn:
                 conn.execute(stmt,Fname=fname,Lname=lname,id=id_num,sex=sex,dob=dob,phone=phone,ethnicity=ethnicity,admission_id=id_num,marital_status=marital_status,med_id=id_num,verifier_id=v_id,history_id=id_num)
@@ -94,6 +101,14 @@ def home():
                     conn.execute(stmt5, med_id=id_num,allergy=medical)
                 if shelter != '0':
                     conn.execute(stmt4, history_id=id_num, shelterID=shelter, date_in=date_in, date_out=date_out)
+                if plan == 'F':
+                    start_date = date.today()
+                    end_date = date.today() + timedelta(7)
+                    conn.execute(stmt6,trial_id=id_num, trial_start=start_date, trial_end=end_date)
+                if plan == 'S':
+                    start_date = date.today()
+                    end_date = date.today() + timedelta(30)
+                    conn.execute(stmt7,subscription_id=id_num, start=start_date, end=end_date)
         
         except Exception as e:
             logger.exception(e)
@@ -117,11 +132,13 @@ def success():
 def search():
     form=SearchForm()
     if form.validate_on_submit():
+        med = ''
 
         # Get User input
         id_num = request.form.get('id_num')
 
         stmt_person = sqlalchemy.text("SELECT Fname,Lname,sex,dob,ethnicity,marital_status FROM Person where id=:id")
+        stmt_medical = sqlalchemy.text("SELECT allergy from Medical where med_id=:med_id")
 
         try:
             with db.connect() as conn:
@@ -132,9 +149,14 @@ def search():
                 dob = result[3]
                 ethnicity = result[4]
                 marital = result[5]
+                medical_details = conn.execute(stmt_medical,med_id=id_num)
+                if medical_details[0] == '':
+                    med = "No allergies"
+                else:
+                    med = medical_details[0]
 
         except Exception as e:
             logger.exception(e)
 
-        return render_template('result.html', fname=fname,lname=lname,sex=sex,dob=dob,ethnicity=ethnicity,marital=marital)
+        return render_template('result.html', fname=fname,lname=lname,sex=sex,dob=dob,ethnicity=ethnicity,marital=marital,med=med)
     return render_template('searchid.html',form=form)
