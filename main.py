@@ -35,7 +35,7 @@ db = sqlalchemy.create_engine(
 #   For exception handling 
 logger = logging.getLogger()
 
-
+#   General entry form for user information
 @app.route('/', methods=['GET','POST'])
 def home():
     form = PersonForm()
@@ -88,26 +88,45 @@ def home():
         #   Person's medical details
         stmt5 = sqlalchemy.text("INSERT INTO Medical(med_id,allergy)" "VALUES(:med_id,:allergy)")
 
+        #   Free trial or subscription plan
         stmt6 = sqlalchemy.text("INSERT INTO FreeTrial(trial_id,trial_start,trial_end)" "VALUES(:trial_id,:trial_start,:trial_end)")
-
         stmt7 = sqlalchemy.text("INSERT INTO Subscription(subscription_id, start, end)" "VALUES(:subscription_id, :start, :end)")
 
         stmt8 = sqlalchemy.text("INSERT INTO Admission(admission_id,trial_id,subscription_id)" "VALUES(:admission_id,:trial_id,:subscription_id)")
 
+        #   To check if verifier data already exist or not
+        stmt9 = sqlalchemy.text("SELECT verifier_id FROM Verifier where verifier_id=:verifier_id")
+
         try:
             with db.connect() as conn:
                 conn.execute(stmt,Fname=fname,Lname=lname,id=id_num,sex=sex,dob=dob,phone=phone,ethnicity=ethnicity,admission_id=id_num,marital_status=marital_status,med_id=id_num,verifier_id=v_id,history_id=id_num)
-                conn.execute(stmt2,verifier_id=v_id, Fname=v_fname, Lname=v_lname, phone=v_phone, Vaddress_id=v_id)
-                conn.execute(stmt3, Vaddress_id=v_id, address=v_address, state=v_state, city=v_city, zipcode=v_zipcode)
                 conn.execute(stmt8,admission_id=id_num,trial_id=id_num,subscription_id=id_num)
+
+
+
+                #   Check if Verifier already exists or not
+                #   If verifier doesn't exist, enter verifier data into table
+                #   else ignore if exists
+                verifier_check = conn.execute(stmt9, verifier_id=v_id)
+                if verifier_check[0] != '':
+                    conn.execute(stmt2,verifier_id=v_id, Fname=v_fname, Lname=v_lname, phone=v_phone, Vaddress_id=v_id)
+                    conn.execute(stmt3, Vaddress_id=v_id, address=v_address, state=v_state, city=v_city, zipcode=v_zipcode)
+
+                #   If there are medical details, insert data into table
                 if medical != '':
                     conn.execute(stmt5, med_id=id_num,allergy=medical)
+
+                #   If there is shelter history, insert data into table
                 if shelter != '0':
                     conn.execute(stmt4, history_id=id_num, shelterID=shelter, date_in=date_in, date_out=date_out)
+
+                #   Add to Free Trial
                 if plan == 'F':
                     start_date = date.today()
                     end_date = date.today() + timedelta(7)
                     conn.execute(stmt6,trial_id=id_num, trial_start=start_date, trial_end=end_date)
+
+                #   Add to Subscription
                 if plan == 'S':
                     start_date = date.today()
                     end_date = date.today() + timedelta(30)
@@ -130,7 +149,7 @@ def success():
 
 
 
-
+#   Get information about person with a certain id
 @app.route('/searchid',methods=['GET','POST'])
 def search():
     form=SearchForm()
