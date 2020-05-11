@@ -5,10 +5,14 @@
 </head>
 <body>
     <h4>Personal Information</h4>
-    {%for i in range(0,len)%}
-        <li>{{result[i]}}<li>
-    {%endfor%}
+    {% for i in range(0,len_result) %}
+        <li>{{ result[i] }}<li>
+    {% endfor %}
+    {{ med }}
     <h4>Verifier Information</h4>
+    {% for i in range(0,len_verifier) %}
+        <li>{{ verifier[i] }}</li>
+    {% endfor %}
     
 </body>
 </html>

@@ -161,25 +161,26 @@ def search():
 
         stmt_person = sqlalchemy.text("SELECT Fname,Lname,sex,dob,ethnicity,marital_status FROM Person where id=:id")
         stmt_medical = sqlalchemy.text("SELECT allergy from Medical where med_id=:med_id")
+        stmt_verifier = sqlalchemy.text("SELECT Verifier.Fname, Verifier.Lname, Verifier.phone FROM Verifier join Person on Verifier.verifier_id=Person.verifier_id WHERE Person.id=:id")
 
         try:
             with db.connect() as conn:
+
+                #   Get Person details
                 result = conn.execute(stmt_person, id=id_num).fetchone()
-                """
-                fname = result[0]
-                lname = result[1]
-                sex = result[2]
-                dob = result[3]
-                ethnicity = result[4]
-                marital = result[5]
+
+                #   Get Medical details
                 medical_details = conn.execute(stmt_medical,med_id=id_num)
                 if medical_details[0] == '':
                     med = "No allergies"
                 else:
                     med = medical_details[0]
-                """
+
+                #   Get Verifier details for person
+                verifier = conn.execute(stmt_verifier,id=id_num)
+                
         except Exception as e:
             logger.exception(e)
 
-        return render_template('result.html', len=len(result), result=result)
+        return render_template('result.html', len_result=len(result), result=result, med=med, len_verifier=len(verifier), verifier=verifier)
     return render_template('searchid.html',form=form)
