@@ -169,18 +169,9 @@ def search():
                 #   Get Person details
                 result = conn.execute(stmt_person, id=id_num).fetchone()
 
-                #   Get Medical details
-                medical_details = conn.execute(stmt_medical,med_id=id_num)
-                if medical_details[0] == '':
-                    med = "No allergies"
-                else:
-                    med = medical_details[0]
-
-                #   Get Verifier details for person
-                verifier = conn.execute(stmt_verifier,id=id_num)
                 
         except Exception as e:
             logger.exception(e)
 
-        return render_template('result.html', len_result=len(result), result=result, med=med, len_verifier=len(verifier), verifier=verifier)
+        return render_template('result.html', len_result=len(result), result=result)
     return render_template('searchid.html',form=form)
